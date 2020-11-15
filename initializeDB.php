@@ -5,26 +5,25 @@ require 'init.php';
 
 
 // Create SQL query string to create category table
-$catgTbl = "
+$catgTbl = '
 CREATE TABLE IF NOT EXISTS Categories (
-
   catgID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(25) NOT NULL,
   parent INT(4) UNSIGNED
-);";
+);';
 
 // Create SQL query string to create tasks table
-$taskTbl = "
+$taskTbl = '
 CREATE TABLE IF NOT EXISTS Tasks (
   taskID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   description VARCHAR(250) NOT NULL,
   date_due VARCHAR(10) NOT NULL,
   category INT(4) UNSIGNED,
   FOREIGN KEY (category) REFERENCES Categories(catgID),
-  priority INT(1) CHECK(priority>=1 AND priority<=4) UNSIGNED,
-  status INT(1) UNSIGNED NOT NULL CHECK(status>=0 AND status<=1),
+  priority INT(1) UNSIGNED,
+  status INT(1) UNSIGNED NOT NULL CHECK (status>=0 AND status<=4),
   date_complete VARCHAR(10) NOT NULL
-);";
+);';
 
 
 
@@ -39,7 +38,7 @@ if (mysqli_query($con, $catgTbl)) {
 }
 
 // Create tasks table
-if (mysqli_query($con, $catgTbl)) {
+if (mysqli_query($con, $taskTbl)) {
   // Table created successfully
   echo "Tasks table successfully created in database with 3 columns<br><br>";
 
@@ -56,5 +55,3 @@ if (mysqli_close($con)) {
   echo "Connection to database successfully closed";
 
 }
-
->
